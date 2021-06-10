@@ -1,6 +1,8 @@
 package subtask1
 
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.TextStyle
 import java.util.*
 
 
@@ -8,6 +10,8 @@ class DateFormatter {
 
     // TODO: Complete the following function
     fun toTextDay(day: String, month: String, year: String): String {
+        val myLocale = Locale("ru", "RU")
+
         val monthNames = arrayOf(
             "января",
             "февраля",
@@ -35,16 +39,16 @@ class DateFormatter {
         val c = Calendar.getInstance()
         val date = SimpleDateFormat("dd-MM-yyyy").parse("$day-$month-$year")
         c.time = date
+
         val monthInt = c[Calendar.MONTH]
 
-        val dayOfWeek = c[Calendar.DAY_OF_WEEK]
+        val dayOfWeek = LocalDate.of( year.toInt() , month.toInt() , day.toInt() )
+            .dayOfWeek.getDisplayName(TextStyle.FULL, myLocale)
         val monthRus = monthNames[monthInt]
 
-//        return when (dayOfWeek) {
-//            in 0..6 -> "$day $monthRus, ${weekDaysNames[dayOfWeek]}"
-//            else -> "Такого дня не существует"
-//        }
-
-        return "fdddf"
+        return when {
+            weekDaysNames.contains(dayOfWeek) -> "$day $monthRus, $dayOfWeek"
+            else -> "Такого дня не существует"
+        }
     }
 }
