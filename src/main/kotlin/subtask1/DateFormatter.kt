@@ -40,9 +40,11 @@ class DateFormatter {
         val dayOfWeek = c[Calendar.DAY_OF_WEEK]
         val monthRus = monthNames[monthInt]
 
-        return when (dayOfWeek) {
-            in 0..6 -> "$day $monthRus, ${weekDaysNames[dayOfWeek]}"
-            else -> "Такого дня не существует"
-        }
+//        return when (dayOfWeek) {
+//            in 0..6 -> "$day $monthRus, ${weekDaysNames[dayOfWeek]}"
+//            else -> "Такого дня не существует"
+//        }
+
+        return "fdddf"
     }
 }
