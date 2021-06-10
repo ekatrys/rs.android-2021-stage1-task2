@@ -1,6 +1,7 @@
 package subtask1
 
 import java.text.SimpleDateFormat
+import java.time.DateTimeException
 import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.*
@@ -26,15 +27,6 @@ class DateFormatter {
             "ноября",
             "декабря"
         )
-        val weekDaysNames = arrayOf(
-            "понедельник",
-            "вторник",
-            "среда",
-            "четверг",
-            "пятница",
-            "суббота",
-            "воскресенье"
-        )
 
         val c = Calendar.getInstance()
         val date = SimpleDateFormat("dd-MM-yyyy").parse("$day-$month-$year")
@@ -42,12 +34,17 @@ class DateFormatter {
 
         val monthInt = c[Calendar.MONTH]
 
-        val dayOfWeek = LocalDate.of( year.toInt() , month.toInt() , day.toInt() )
-            .dayOfWeek.getDisplayName(TextStyle.FULL, myLocale)
+        val dayOfWeek = try {
+            LocalDate.of( year.toInt() , month.toInt() , day.toInt() )
+                .dayOfWeek.getDisplayName(TextStyle.FULL, myLocale)
+        } catch (e: DateTimeException) {
+            null
+        }
+
         val monthRus = monthNames[monthInt]
 
         return when {
-            weekDaysNames.contains(dayOfWeek) -> "$day $monthRus, $dayOfWeek"
+            dayOfWeek != null -> "$day $monthRus, $dayOfWeek"
             else -> "Такого дня не существует"
         }
     }
